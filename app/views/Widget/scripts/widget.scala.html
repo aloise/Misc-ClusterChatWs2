@@ -1,0 +1,4 @@
+@(
+  widgetId:String,
+  widgetConfig:play.api.libs.json.JsObject
+)@layoutWithinIframe(widgetId, widgetConfig)( views.js.Widget.scripts.widgetJavascript( widgetId, widgetConfig ) )

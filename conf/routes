@@ -1,0 +1,40 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET            /                                                           controllers.Application.index
+
+GET            /user/chat/check_assistants_online_status/:widgetId         controllers.UserGateway.checkAssistantsOnlineStatus( widgetId : String, ts:String ?= "" )
+POST           /user/chat/send_offline_message                             controllers.UserGateway.sendOfflineMessage
+
+# widget ebmed data
+GET            /widget/embed/main/:widgetId                                controllers.Widgets.embed( widgetId:String )
+GET            /widget/embed/iframe/:widgetId                              controllers.Widgets.embedIframe( widgetId:String )
+
+#tracking
+
+GET            /tracker/widget                                             controllers.Tracker.widget( widgetId:String ?= "", trackingCookie:String ?= "", ts:String ?= "" )
+OPTIONS        /tracker/widget/*path                                       controllers.Application.crossOriginOptions( path:String )
+
+# map all user connections
+
+->             /gateway/user                                               controllers.UserGateway.sockjs
+OPTIONS        /user/chat/*path                                            controllers.Application.crossOriginOptions( path:String )
+POST           /user/chat/feedback/:chatRoomId                             controllers.UserGateway.saveChatFeedback( chatRoomId:String )
+POST           /user/chat/email/:chatRoomId/:userToken                     controllers.UserGateway.userEmailChat( chatRoomId:String, userToken:String )
+
+
+OPTIONS    /          controllers.Application.crossOriginOptions(path: String ?= "")
+OPTIONS    /*path     controllers.Application.crossOriginOptions(path)
+
+# assistant gateway
+
+#GET            /gateway/assistant/iframe.html                             controllers.AssistantGateway.iframeGateway()
+->             /gateway/assistant                                          controllers.AssistantGateway.sockjs
+
+# Cross- origin assets
+GET            /assets/fonts/*file                                         controllers.Application.crossOriginAssets( path = "/public/fonts", file )
+
+# Map static resources from the /public folder to the /assets URL path
+GET            /assets/*file                                               controllers.Assets.at(path="/public", file)

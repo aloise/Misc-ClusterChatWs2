@@ -1,0 +1,188 @@
+<div class="ibs-business-chat ibs-business-chat-wrap" style="display:none;">
+    <div class="ibs-business-chat ibs-business-chat-header">
+        <div class="ibs-business-chat ibs-business-chat-header-buttons">
+            <div class="ibs-business-chat ibs-business-chat-icon ibs-business-chat-icon-finish">
+                <i title="[finishTheChatButton]" class="ibs-business-chat ibs-business-chat-icon ibs-business-chat-icon-finish">&times</i>
+            </div>
+            <div class="ibs-business-chat ibs-business-chat-icon ibs-business-chat-icon-minimize">
+                <i title="[minimizeButton]" class="ibs-business-chat ibs-business-chat-icon ibs-business-chat-icon-minimize">_</i>
+            </div>
+        </div>
+
+        <div class="ibs-business-chat ibs-business-chat-header-info-block">
+            <div class="ibs-business-chat-header-logo"></div>
+            <div class="ibs-business-chat-header-title"><span></span></div>
+        </div>
+    </div>
+
+    <div class="ibs-business-chat ibs-business-chat-body ibs-business-chat-vertical-scrolling">
+        <div class="ibs-business-chat ibs-business-chat-start-form "> <!-- login form -->
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-login-name-input">[userNameLabel]</label>
+                    <span class="ibs-business-chat-required-field">*</span>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <input data-ibs-business-chat-required class="ibs-business-chat" type="text" placeholder="[userNameLabel]" name="ibs-business-chat-login-name" id="ibs-business-chat-login-name-input">
+                </div>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-login-email-input">[userEmailLabel]</label>
+                    <span class="ibs-business-chat-required-field">*</span>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <input data-ibs-business-chat-required data-ibs-business-chat-required-email class="ibs-business-chat" type="email" placeholder="[userEmailLabel]" name="ibs-business-chat-login-email" id="ibs-business-chat-login-email-input">
+                </div>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-login-company-input">[userCompanyLabel]</label>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <input class="ibs-business-chat" type="text" placeholder="[userCompanyLabel]" name="ibs-business-chat-login-company" id="ibs-business-chat-login-company-input">
+                </div>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label ibs-business-chat-remember-me">
+                    <input id="ibs-business-chat-remember-me-checkbox" class="ibs-business-chat" type="checkbox" name="remember_me">
+                    <label for="ibs-business-chat-remember-me-checkbox">[rememberMeCheckboxLabel]</label>
+                </div>
+            </div>
+
+            <div class="ibs-business-chat ibs-business-chat-start-chat">
+                <div class="ibs-business-chat-form-button" id="ibs-business-chat-start-chat-button">
+                    <span>[startTheChatButton]</span>
+                </div>
+            </div>
+
+            <div class="ibs-business-chat ibs-business-chat-connection-error-message">
+            </div>
+        </div>  <!-- end of login form -->
+
+        <div class="ibs-business-chat ibs-business-chat-conversation-form ">  <!-- chat window -->
+            <div id="ibs-business-chat-messages-history" class="ibs-business-chat ibs-business-chat-messages-history ibs-business-chat-vertical-scrolling"></div>
+
+            <div class="ibs-business-chat-conversation-buttons">
+                <div class="ibs-business-chat ibs-business-chat-form-button ibs-business-chat-form-finish-chat-button">[finishTheChatButton]</div>
+            </div>
+
+            <div class="ibs-business-chat-message-input-area">
+                <textarea id="ibs-business-chat-user-message-input" class=ibs-business-chat name="message" placeholder="[userMessageTextarea]"></textarea>
+                <div class="ibs-business-chat ibs-business-chat-icon" id="ibs-business-chat-send-message-button">
+                    <i class="ibs-business-chat ibs-business-chat-icon ibs-business-chat-icon-send-message" title="[sendMessageButton]">&para;</i>
+                </div>
+            </div>
+
+        </div> <!-- end of chat window -->
+
+        <div class="ibs-business-chat ibs-business-chat-dialog-is-finished ">  <!-- finish dialog form -->
+            <div class="ibs-business-chat ibs-business-chat-block-title">[dialogIsCompleted]</div>
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat ibs-business-chat-block-h3-title">[problemIsSolved]</div>
+
+                <div class="ibs-business-chat ibs-business-chat-problem-is-solved">
+                    <div class="ibs-business-chat ibs-business-chat-radio-block">
+                        <input class="ibs-business-chat ibs-business-chat-problem-is-solved-radio" type="radio" name="ibs_business_chat_problem_is_solved" id="ibs_business_chat_problem_is_solved_yes" value="yes">
+                        <label for="ibs_business_chat_problem_is_solved_yes" class="ibs-business-chat">[problemIsSolvedRadio]</label>
+                    </div>
+                    <div class="ibs-business-chat ibs-business-chat-radio-block">
+                        <input class="ibs-business-chat ibs-business-chat-problem-is-solved-radio" type="radio" name="ibs_business_chat_problem_is_solved" id="ibs_business_chat_problem_is_solved_no" value="no">
+                        <label for="ibs_business_chat_problem_is_solved_no" class="ibs-business-chat">[problemIsNotSolvedRadio]</label>
+                    </div>
+
+                </div>
+
+                <div class="ibs-business-chat ibs-business-chat-problem-is-not-solved-contact-data" >
+                    <div class="ibs-business-chat ibs-business-chat-form-field-label">[feedbackFormHeader]</div>
+
+                    <div class="ibs-business-chat ibs-business-chat-form-field">
+                        <input data-ibs-business-chat-required-email class="ibs-business-chat ibs-business-chat-problem-is-not-solved-email" type="email" placeholder="[userEmailLabel]">
+                    </div>
+                    <div class="ibs-business-chat ibs-business-chat-form-field">
+                        <input class="ibs-business-chat ibs-business-chat-problem-is-not-solved-phone" type="text" placeholder="[userPhoneLabel]">
+                    </div>
+                    <div class="ibs-business-chat ibs-business-chat-form-field">
+                        <textarea class="ibs-business-chat ibs-business-chat-problem-is-not-solved-comment" placeholder="[userCommentLabel]"></textarea>
+                    </div>
+                </div>
+
+                <div class="ibs-business-chat ibs-business-chat-save-and-exit-form" >
+                    <div class="ibs-business-chat ibs-business-chat-form-button ibs-business-chat-form-button-back-button">[backButton]</div>
+                    <div class="ibs-business-chat ibs-business-chat-form-button-save-exit-button ibs-business-chat-button-black">[saveAndExitButton]</div>
+                </div>
+
+                <div class="ibs-business-chat ibs-business-chat-email-transcript-form">
+                    <div class="ibs-business-chat ibs-business-chat-form-button ibs-business-chat-email-transcript-button">[sendEmailTranscriptButton]</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ibs-business-chat ibs-business-chat-send-offline-message-form"> <!-- send offline message form -->
+            <div class="ibs-business-chat ibs-business-chat-form-field-label ibs-business-chat-offline-status-label">
+                <span>[offlineMessageLine1]</span>
+                <span>[offlineMessageLine2]</span>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-offline-login-name-input">[userNameLabel]</label>
+                    <span class="ibs-business-chat-required-field">*</span>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <input data-ibs-business-chat-required class="ibs-business-chat" type="text" placeholder="[userNameLabel]" name="ibs-business-chat-offline-login-name" id="ibs-business-chat-offline-login-name-input">
+                </div>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-offline-login-email-input">[userEmailLabel]</label>
+                    <span class="ibs-business-chat-required-field">*</span>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <input data-ibs-business-chat-required data-ibs-business-chat-required-email class="ibs-business-chat" type="email" placeholder="[userEmailLabel]" name="ibs-business-chat-offline-login-email" id="ibs-business-chat-offline-login-email-input">
+                </div>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-offline-login-company-input">[userCompanyLabel]</label>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <input class="ibs-business-chat" type="text" placeholder="[userCompanyLabel]" name="ibs-business-chat-offline-login-company" id="ibs-business-chat-offline-login-company-input">
+                </div>
+            </div>
+
+            <div class="ibs-business-chat">
+                <div class="ibs-business-chat-form-field-label">
+                    <label for="ibs-business-chat-offline-description-textarea">[userDescriptionLabel]</label>
+                </div>
+                <div class="ibs-business-chat-form-field">
+                    <textarea data-ibs-business-chat-required class="ibs-business-chat ibs-business-chat-offline-description-textarea" placeholder="[userDescriptionLabel]" name="ibs-business-chat-offline-description-textarea" id="ibs-business-chat-offline-description-textarea"></textarea>
+                </div>
+            </div>
+
+
+            <div class="ibs-business-chat ibs-business-chat-send-offline-message">
+                <div class="ibs-business-chat-form-button" id="ibs-business-chat-send-offline-message-button">
+                    <span>[sendMessageButton]</span>
+                </div>
+            </div>
+
+            <div class="ibs-business-chat ibs-business-chat-connection-error-message">
+            </div>
+        </div>  <!-- end of send offline message form -->
+    </div>
+
+    <div class="ibs-business-chat ibs-business-chat-footer ibs-business-chat-ellipsis">
+    </div>
+</div>
+
+<div id="ibs-business-chat-open-chat-form-button" class="ibs-business-chat-open-chat-form-button ibs-business-chat-button-black ibs-business-chat-ellipsis">
+    <span></span>
+</div>
+

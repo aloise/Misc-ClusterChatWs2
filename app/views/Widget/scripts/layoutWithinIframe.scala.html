@@ -1,0 +1,12 @@
+@(
+  widgetId:String,
+  widgetConfig:play.api.libs.json.JsObject
+)(content: JavaScript)
+<html>
+    <head>
+        <script type="text/javascript">
+            @HtmlFormat.raw( views.js.Widget.scripts.layout(widgetId, widgetConfig)(content).toString )
+        </script>
+    </head>
+    <body></body>
+</html>

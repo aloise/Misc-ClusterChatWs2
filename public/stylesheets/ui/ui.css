@@ -1,0 +1,573 @@
+.ibs-business-chat, .ibs-business-chat *,
+.ibs-business-chat *::before, .ibs-business-chat *::after {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.ibs-business-chat label {
+    display: inline-block;
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.ibs-business-chat  {
+    color: #000000;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    border-radius: 0;
+    bottom: auto;
+    box-shadow: none;
+    box-sizing: content-box;
+    float: none;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 16px;
+    left: auto;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    position: relative;
+    right: auto;
+    text-align: left;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    top: auto;
+    vertical-align: baseline;
+}
+
+.ibs-business-chat-disabled {
+    opacity: 0.9 !important;
+}
+
+.ibs-business-chat ::-webkit-input-placeholder      {color:#aaaaaa !important; text-overflow: ellipsis;}
+.ibs-business-chat ::-moz-placeholder               {color:#555555 !important; text-overflow: ellipsis;}
+.ibs-business-chat :-moz-placeholder                {color:#555555 !important; text-overflow: ellipsis;}
+.ibs-business-chat :-ms-input-placeholder           {color:#aaaaaa !important; text-overflow: ellipsis;}
+
+.ibs-business-chat-wrap {
+    background: none repeat scroll 0 0 #f0f0ef;
+    /*border: 1px solid #444;*/
+    position: fixed;
+    z-index: 999999;
+    /*display:none;*/
+}
+
+.ibs-business-chat-hidden {
+    display: none;
+}
+
+.ibs-business-chat-wrap .ibs-business-chat-body {
+    height: 415px;
+}
+
+.ibs-business-chat-footer {
+    height: 25px;
+    line-height: 24px;
+    padding-left: 10px;
+    overflow: hidden;
+}
+
+.ibs-business-chat-header-info-block, .ibs-business-chat-header-title {
+    overflow: hidden;
+}
+
+.ibs-business-chat-header {
+    background: none repeat scroll 0 0 #444;
+    color: #fff;
+    /*height: 45px;*/
+    /*min-width: 258px;*/
+}
+
+.ibs-business-chat-header-title {
+    color: #fff;
+    font-size: 16px;
+    padding-left: 20px;
+}
+
+.ibs-business-chat-header-logo {  }
+
+
+
+.ibs-business-chat-header-buttons {
+    border-left: 1px solid #a8a8a8;
+    float: right;
+    margin-right: 5px;
+    width: 55px;
+}
+
+
+i.ibs-business-chat-icon {
+    display: inline-block;
+    text-decoration: inherit;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    color: #ffffff;
+}
+
+i.ibs-business-chat-icon.ibs-business-chat-icon-minimize {
+    top: -8px
+}
+
+
+div.ibs-business-chat-icon {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    height: 14px;
+    line-height: 14px;
+    margin: 4px 4px 0 0;
+    padding: 2px;
+}
+
+div.ibs-business-chat-icon.ibs-business-chat-icon-hover {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#4cffffff', endColorstr='#4cffffff'); /* IE */
+}
+
+div#ibs-business-chat-send-message-button {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 9px;
+}
+
+i.ibs-business-chat-icon.ibs-business-chat-icon-send-message {
+    color: #666666;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+/*.ibs-business-chat-icon-maximize:before { content: '\e800'; }
+.ibs-business-chat-icon-minimize:before { content: '\e801'; }
+.ibs-business-chat-icon-finish{ content: '\e802'; }
+.ibs-business-chat-icon-send-message:before { content: '\e803'; }*/
+
+.ibs-business-chat-start-form, .ibs-business-chat-dialog-is-finished,
+.ibs-business-chat-send-offline-message-form {
+    padding: 10px;
+}
+
+.ibs-business-chat-send-offline-message-form {
+    overflow: auto;
+}
+
+.ibs-business-chat-form-field-label {
+    color: #262626;
+    font-size: 14px;
+    margin: 0 0 7px 1px;
+}
+
+.ibs-business-chat-form-field-label.ibs-business-chat-offline-status-label {
+    font-size: 13px;
+}
+
+.ibs-business-chat-form-field {
+    margin: 0 15px 0 0;
+}
+
+.ibs-business-chat-connection-error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.ibs-business-chat-form-field-label label {
+    cursor: pointer;
+}
+
+textarea.ibs-business-chat.ibs-business-chat-error-input,
+input.ibs-business-chat.ibs-business-chat-error-input[type="text"],
+input.ibs-business-chat.ibs-business-chat-error-input[type="email"] {
+    border: 1px solid #ff0000;
+}
+
+input.ibs-business-chat[type="text"], input.ibs-business-chat[type="email"] {
+    height: 36px;
+    padding: 1px 7px;
+    line-height: 36px;
+}
+
+input.ibs-business-chat[type="text"], input.ibs-business-chat[type="email"], textarea.ibs-business-chat {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #dadad9;
+    font-size: 13px;
+    width: 100%;
+}
+
+.ibs-business-chat-send-offline-message-form input.ibs-business-chat,
+.ibs-business-chat-send-offline-message-form textarea,
+.ibs-business-chat-start-form input.ibs-business-chat,
+.ibs-business-chat-problem-is-not-solved-contact-data input.ibs-business-chat,
+.ibs-business-chat-problem-is-not-solved-contact-data textarea {
+    margin-bottom: 14px;
+    /*width: 255px;*/
+}
+
+
+.ibs-business-chat-start-form input[type="checkbox"]:focus,
+.ibs-business-chat input[type="radio"]:focus {
+    /*outline: 0 none;*/
+}
+
+.ibs-business-chat-start-form input[type="checkbox"] {
+    margin: 0 10px 0 0;;
+    width: auto;
+    float: left;
+}
+
+.ibs-business-chat-remember-me { float:right ; }
+.ibs-business-chat input#ibs-business-chat-remember-me-checkbox { margin: 1px 10px 0 0; }
+
+span.ibs-business-chat-required-field {
+    color: #b11313;
+}
+
+.ibs-business-chat-form-button, .ibs-business-chat-form-button-save-exit-button {
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.75) inset;
+    cursor: pointer;
+    font-size: 14px;
+    height: 35px;
+    line-height: 35px;
+    margin: 10px 0 0;
+    text-align: center;
+}
+
+.ibs-business-chat-send-offline-message-form .ibs-business-chat-form-button,
+.ibs-business-chat-start-chat .ibs-business-chat-form-button, .ibs-business-chat-form-finish-chat-button {
+    background: none repeat scroll 0 0 #f4f4f3;
+    border: 1px solid #dadad9;
+    color: #333333;
+
+}
+
+.ibs-business-chat-start-chat .ibs-business-chat-form-button {
+    margin-top: 35px;
+}
+
+.ibs-business-chat-form-button:hover {
+    background: none repeat scroll 0 0 #fcfcfb;
+    border: 1px solid #c4c4c3;
+    color: #333;
+}
+
+
+.ibs-business-chat-conversation-form {
+    /*display: none;*/
+}
+
+.ibs-business-chat-messages-history {
+    background: none repeat scroll 0 0 #fff;
+}
+
+.ibs-business-chat-messages-history.ibs-business-chat-no-avatars .ibs-business-chat-message-content {
+    margin: 0 0 0 5px;
+}
+
+.ibs-business-chat-messages-history.ibs-business-chat-no-avatars .ibs-business-chat-user-photo {
+    display: none;
+}
+
+
+.ibs-business-chat-conversation-buttons {
+    border-top: 1px solid #d3d3d2;
+    height: 36px;
+    padding: 0 8px;
+}
+
+.ibs-business-chat-form-finish-chat-button {
+    float: right;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin-top: 5px;
+    min-width: 85px;
+}
+
+.ibs-business-chat-message-input-area {
+    position: relative;
+}
+
+.ibs-business-chat-message-input-area textarea {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #d3d3d2;
+    border-width: 1px 0 1px 0;
+    display: block;
+    font-family: Arial,sans-serif;
+    font-size: 13px;
+    height: 35px;
+    line-height: 16px;
+    outline: medium none;
+    padding: 4px 35px 4px 4px;;
+    resize: none;
+    /*width: 263px;*/
+    overflow: hidden;
+}
+
+.ibs-business-chat-message-input-area textarea[disabled] {
+    background: none repeat scroll 0 0 #f8f8f8;
+}
+
+.ibs-business-chat-user-photo {
+    color: #b11313;
+    float: left;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.ibs-business-chat-message-text {
+    color: #363636;
+    font-size: 12px;
+    line-height: 18px;
+    word-wrap: break-word;
+}
+
+.ibs-business-chat-message-time {
+    color: #909090;
+    float: right;
+    font-size: 10px;
+}
+
+.ibs-business-chat-message-username {
+    float: left;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.ibs-business-chat-message-username-client {
+    color: #b11313;
+}
+
+.ibs-business-chat-message-username-assistant {
+    color: #627aad;
+}
+
+.ibs-business-chat-message-username-system {
+ color: #377737;
+}
+
+.ibs-business-chat-message-content {
+    margin: 0 0 0 45px;
+}
+
+.ibs-business-chat-user-photo {
+    float: left;
+    height: 36px;
+    overflow: hidden;
+    width: 36px;
+}
+
+.ibs-business-chat-user-photo img {
+    height: 36px;
+    width: 36px;
+}
+
+.ibs-business-chat-message-wrap {
+    border-bottom: 1px solid #f2f2f2;
+    margin: 0 8px;
+    min-height: 36px;
+   /* min-width: 240px;*/
+    padding: 3px 0;
+    clear: both;
+}
+
+.ibs-business-chat-message-wrap.ibs-business-chat-message-author-greeting-message {
+    min-height: inherit;
+    padding: 8px 0;
+}
+
+
+.ibs-business-chat-message-details {
+    height: 16px;
+    line-height: 16px;
+}
+
+.ibs-business-chat-message-author-greeting-message .ibs-business-chat-message-details,
+.ibs-business-chat-message-author-greeting-message .ibs-business-chat-user-photo {
+    display: none;
+}
+
+
+.ibs-business-chat-block-title {
+    color: #646464;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.ibs-business-chat-block-h3-title {
+    font-weight: normal;
+    color: #333;
+}
+
+.ibs-business-chat-problem-is-solved { margin-top: 10px; }
+.ibs-business-chat-problem-is-solved .ibs-business-chat-radio-block {
+    margin-bottom: 10px;
+}
+
+.ibs-business-chat-problem-is-solved .ibs-business-chat-radio-block label {
+    top: -2px;
+    color: #000;
+    line-height: 16px;
+}
+
+.ibs-business-chat-problem-is-solved input[type="radio"] {
+    float: left;
+    margin: 0 10px 0 0;
+}
+
+.ibs-business-chat-problem-is-not-solved-contact-data textarea,
+textarea.ibs-business-chat-offline-description-textarea {
+    height: 75px;
+    margin: 0;
+    padding: 8px 7px 1px;
+    resize: none;
+}
+
+.ibs-business-chat-problem-is-not-solved-contact-data input.ibs-business-chat {
+    margin-bottom: 7px;
+}
+
+.ibs-business-chat-problem-is-not-solved-contact-data, .ibs-business-chat-save-dialog-form {
+    border-bottom: 1px solid #d7d7d6;
+    font-size: 13px;
+    padding-bottom: 15px;
+}
+
+.ibs-business-chat-vertical-scrolling {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.ibs-business-chat-button-black {
+    /*background: none repeat scroll 0 0 #363636;*/
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.75) inset;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/*.ibs-business-chat-form-button-save-exit-button {
+    border: 1px solid #444;
+
+} */
+
+.ibs-business-chat-button-black:hover {
+    opacity: .92;
+    /*filter: alpha(opacity=95);*/
+}
+
+.ibs-business-chat-email-transcript-button,
+.ibs-business-chat-form-button-back-button {
+    background: none repeat scroll 0 0 #f4f4f3;
+    border: 1px solid #dadad9;
+    color: #646464;
+}
+
+.ibs-business-chat-email-transcript-button,
+.ibs-business-chat-form-button-save-exit-button,
+.ibs-business-chat-form-button-back-button {
+    width: 125px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    display: inline-block;
+}
+
+.ibs-business-chat-open-chat-form-button {
+    position: fixed;
+    z-index: 999999;
+    padding: 0 10px;
+    font-family: Arial;
+    min-width: 122px;
+    text-align: center;
+    font-size: 16px;
+    width: auto;
+    max-width: 220px;
+    height: 36px;
+    line-height: 36px;
+}
+
+.ibs-business-chat-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ibs-business-chat-open-chat-form-button > span {
+    white-space: nowrap;
+}
+
+.ibs-business-chat-open-chat-form-button.ibs-business-chat-wrap-bottomRight {
+    right: 0;
+    bottom: 0;
+}
+
+.ibs-business-chat-open-chat-form-button.ibs-business-chat-wrap-bottomLeft {
+    left: 0;
+    bottom: 0;
+}
+
+.ibs-business-chat-save-and-exit-form {
+    text-align: center;
+}
+
+.ibs-business-chat-email-transcript-form {
+    text-align: center;
+    margin-top: 15px;
+}
+
+input.ibs-business-chat-placeholder, textarea.ibs-business-chat-placeholder  {color:#aaaaaa !important; }
+
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small { width: 230px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-messages-history { height: 203px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-body { height: 285px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-body > div { height: 265px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-header { height: 35px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-header-title { height: 35px; line-height: 35px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-header-buttons { height: 27px; margin-top: 4px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-block-h3-title { font-size: 18px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-form-button-back-button { margin-right: 0; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small input[type="text"].ibs-business-chat,
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small input[type="email"].ibs-business-chat { height: 26px; line-height: 26px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-form-field-label { font-size: 13px; margin: 0 0 3px 1px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-start-form input.ibs-business-chat { margin-bottom: 8px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-start-chat .ibs-business-chat-form-button { margin-top: 30px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-connection-error-message { margin-top: 10px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-message-input-area textarea { width: 191px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-message-username { width: 115px; font-size: 12px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-small .ibs-business-chat-messages-history.ibs-business-chat-no-avatars .ibs-business-chat-message-username { width: 130px; }
+
+
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium { width: 310px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-messages-history { height: 273px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-body { height: 355px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-body > div { height: 335px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-header { height: 45px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-header-title { height: 45px; line-height: 45px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-header-buttons { height: 27px; margin-top: 10px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-block-h3-title { font-size: 22px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-form-button-back-button { margin-right: 10px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-message-input-area textarea { width: 271px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-form-field-label.ibs-business-chat-offline-status-label span { display: block; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-message-username { width: 195px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-medium .ibs-business-chat-messages-history.ibs-business-chat-no-avatars .ibs-business-chat-message-username { width: 220px; }
+
+
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large { width: 380px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-messages-history { height: 333px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-body { height: 415px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-body > div { height: 395px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-header { height: 45px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-header-title { height: 45px; line-height: 45px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-header-buttons { height: 27px; margin-top: 10px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-block-h3-title { font-size: 22px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-form-button-back-button { margin-right: 10px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-message-input-area textarea { width: 341px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-form-field-label.ibs-business-chat-offline-status-label span { display: block; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-message-username { width: 265px; }
+.ibs-business-chat-wrap.ibs-business-chat-wrap-large .ibs-business-chat-messages-history.ibs-business-chat-no-avatars .ibs-business-chat-message-username { width: 290px; }

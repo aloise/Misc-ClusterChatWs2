@@ -1,0 +1,20 @@
+@(
+        widgetId:String,
+        widgetConfig:play.api.libs.json.JsObject
+)
+
+<div
+    class="ibs-business-chat-iframe-wrap @( ( widgetConfig \ "widgetSize" ).asOpt[String].getOrElse("#") ) @( ( widgetConfig \ "widgetPosition" ).asOpt[String].getOrElse("#") )"
+    id="ibs-business-chat-iframe-wrap"
+    style="visibility: hidden; height: 36px; ">
+
+    <iframe
+        src="@( ( widgetConfig \ "iframeURL" ).asOpt[String].getOrElse("#") )"
+        width="130"
+        height="36"
+        class="ibs-business-chat-iframe"
+        frameborder="0"
+        name="ibs-business-chat-iframe"
+        id="ibs-business-chat-iframe"
+    ></iframe>
+</div>
