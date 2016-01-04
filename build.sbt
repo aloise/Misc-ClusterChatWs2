@@ -1,4 +1,4 @@
-name := "businesschat"
+name := "chat-cluster-ws"
 
 version := "1.0.0"
 
