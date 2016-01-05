@@ -78,11 +78,12 @@ object ChatRoomHelper {
 
   implicit val chatRoomMessageJsonFormat = utils.Json.toOFormat( Json.format[ChatRoomMessage] )
   implicit val chatRoomUserFeedbackJsonFormat = utils.Json.toOFormat( Json.format[ChatRoomUserFeedback] )
-  implicit val bcCrmCustomerInfo = utils.Json.toOFormat( Json.format[BcCrmCustomerInfo] )
+  // implicit val bcCrmCustomerInfo = utils.Json.toOFormat( Json.format[BcCrmCustomerInfo] )
 
 }
 
 import ChatRoomHelper._
+import models.BusinessCatalystOAuth._
 import models.Companies.{ jsonFormat =>j1 }
 
 
