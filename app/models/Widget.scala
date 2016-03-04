@@ -6,7 +6,7 @@ import models.ChatRooms._
 import play.api.cache.Cache
 import play.twirl.api.JavaScript
 import reactivemongo.api.indexes.{IndexType, Index}
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import models.base.Collection
 import models.base.Collection.ObjId
 import play.api.libs.json.Json
@@ -26,8 +26,8 @@ import play.api.libs.json.Json
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import java.util.Date
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import org.cvogt.play.json.implicits.optionNoError
 

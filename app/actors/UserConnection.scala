@@ -7,7 +7,7 @@ import play.api.mvc.RequestHeader
 import play.sockjs.api.SockJS.MessageFormatter
 
 import scala.concurrent.Future
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import actors.Company.NewUserJoin
 import actors.messages.SocksMessages._
 import akka.util.Timeout
@@ -32,8 +32,8 @@ import net.sf.uadetector.UserAgent
 import net.sf.uadetector.UserAgentStringParser
 import com.netaporter.uri.dsl._
 import com.netaporter.uri._
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 
 /**

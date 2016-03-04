@@ -8,8 +8,8 @@ import play.api.libs.json.Json
 import play.api.mvc.Cookie
 import reactivemongo.api.indexes.{IndexType, Index}
 
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 
 import scala.util.Random

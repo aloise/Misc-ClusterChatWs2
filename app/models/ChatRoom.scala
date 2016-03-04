@@ -7,14 +7,14 @@ import models.base.Collection
 import models.base.Collection._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import reactivemongo.bson.BSONObjectID
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import reactivemongo.api.indexes.{IndexType, Index}
 import models.UserHelper.userJsonFormat
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
 import scala.util.Try
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import BusinessCatalystOAuth._
 

@@ -13,8 +13,8 @@ import scala.concurrent.Future
 
 import play.api.Play.current
 
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 
 case class UserInfo(

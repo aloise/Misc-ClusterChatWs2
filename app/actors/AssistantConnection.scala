@@ -14,12 +14,12 @@ import play.api.libs.json._
 import akka.pattern._
 import play.api.libs.concurrent.Execution.Implicits._
 import reactivemongo.api.QueryOpts
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import actors.messages.SocksMessages
 import play.api.Logger
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 /**
  * User: aloise

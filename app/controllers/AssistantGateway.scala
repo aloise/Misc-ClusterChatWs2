@@ -7,8 +7,8 @@ import actors.messages.SocksMessages.{AssistantRequest, Message}
 import play.api.libs.json.{JsString, Json}
 import play.api.mvc.{RequestHeader, Controller}
 import play.sockjs.api.{SockJSRouter, SockJSSettings}
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import scala.concurrent.Future
 import scala.util.Try

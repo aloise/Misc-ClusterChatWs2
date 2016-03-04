@@ -10,8 +10,8 @@ import play.api.{Logger, Play}
 import play.api.cache.Cache
 import play.twirl.api.JavaScript
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import reactivemongo.core.commands.Count
 import models.base.Collection

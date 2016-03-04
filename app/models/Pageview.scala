@@ -10,7 +10,7 @@ import reactivemongo.api.QueryOpts
 import reactivemongo.api.indexes.{IndexType, Index}
 import reactivemongo.bson.{BSONBoolean, BSONString, BSONDocument}
 import reactivemongo.core.commands.Count
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import models.base.Collection
 import models.base.Collection.ObjId
 import play.api.libs.json.Json
@@ -18,8 +18,8 @@ import models.UserHelper._
 import com.netaporter.uri.dsl._
 import com.netaporter.uri._
 import scala.concurrent.Future
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 
 import scala.util.Try

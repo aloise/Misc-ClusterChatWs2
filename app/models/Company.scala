@@ -12,12 +12,12 @@ import models.permissions.CompanyPermission._
 import models.permissions.CompanyPermission.CompanyPermissionItem
 import play.api.libs.json.{JsNull, JsUndefined, JsValue, Json}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import CompanyBrandsSettingz.{ jsonFormat => CompanyBrandsSettingsJsonFormat }
 import reactivemongo.bson.{BSONString, BSONBoolean, BSONDocument}
 import scala.concurrent.{ExecutionContext, Future}
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import scala.reflect.ClassTag
 import BusinessCatalystOAuth._
