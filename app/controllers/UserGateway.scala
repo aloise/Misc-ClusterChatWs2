@@ -13,8 +13,8 @@ import models.BusinessCatalystOAuth._
 import models.base.Collection.ObjId
 import play.api.libs.concurrent.Akka
 import play.sockjs.api.SockJS.MessageFormatter
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import reactivemongo.bson.BSONObjectID
 

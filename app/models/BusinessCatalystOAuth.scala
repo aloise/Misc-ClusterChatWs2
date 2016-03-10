@@ -125,6 +125,7 @@ object BusinessCatalystOAuth {
   implicit val customFieldLabelToJson = Json.format[CustomFieldLabel]
   implicit val bcCrmCustomerToJson = Json.format[Customer]
   implicit val bcCrmCustomerAddressToJson = Json.format[CustomerAddress]
+  implicit val bcCrmCustomerInfoToJson = Json.format[BcCrmCustomerInfo]
 
 
 }

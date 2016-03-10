@@ -4,7 +4,7 @@ version := "1.0.0"
 
 scalaVersion := "2.11.7"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala).settings( autoScalaLibrary := false )
+// lazy val root = (project in file(".")).enablePlugins(PlayScala).settings( autoScalaLibrary := false )
 
 resolvers ++= Seq(
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",

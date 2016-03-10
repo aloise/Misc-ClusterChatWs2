@@ -7,8 +7,8 @@ import java.util.Date
 import models.{UserHelper, UserStatsOSData, UserStatsUserAgent, VisitorStats}
 import play.sockjs.api.SockJS.MessageFormatter
 import scala.concurrent.Future
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import actors.Company.NewUserJoin
 import actors.messages.SocksMessages._
