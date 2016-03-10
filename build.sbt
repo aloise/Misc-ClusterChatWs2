@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
   ws,
   filters,
   "commons-io" % "commons-io" % "2.4",
-  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.7.play24",
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.11.10",
   "com.github.fdimuccio" %% "play2-sockjs" % "0.4.0",
   "com.softwaremill.macwire" %% "macros" % "0.7.2",
   "org.julienrf" %% "play-json-variants" % "2.0",

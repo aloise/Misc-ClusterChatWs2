@@ -2,21 +2,23 @@ package models
 
 import java.util.Date
 
+import com.ibslabs.bc.CrmCustomers
+import com.ibslabs.bc.models.crm
+import com.ibslabs.bc.models.crm.CustomerAddress
 import models.UserInfos._
 import models.base.Collection
 import models.base.Collection._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import reactivemongo.bson.BSONObjectID
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import reactivemongo.api.indexes.{IndexType, Index}
 import models.UserHelper.userJsonFormat
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
 import scala.util.Try
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
-import BusinessCatalystOAuth._
 
 
 /**
@@ -30,6 +32,11 @@ case class ChatRoomMessage (
    message:String, // contains Json for specific message types
    messageType: Option[String] = None,
    created:Date = new Date()
+)
+
+case class BcCrmCustomerInfo(
+    customer: crm.Customer,
+    addresses: Seq[crm.CustomerAddress] = Seq()
 )
 
 case class ChatRoomUserFeedback( email:String, phone:String, comment:String, problemIsSolved:Boolean)
@@ -75,6 +82,7 @@ object ChatRoomStatuses {
 
 object ChatRoomHelper {
 
+  import crm.CustomerHelper._
 
   implicit val chatRoomMessageJsonFormat = utils.Json.toOFormat( Json.format[ChatRoomMessage] )
   implicit val chatRoomUserFeedbackJsonFormat = utils.Json.toOFormat( Json.format[ChatRoomUserFeedback] )
@@ -129,7 +137,32 @@ object ChatRooms extends Collection("chat_rooms", Json.format[ChatRoom]) {
     }
   }
 
+  def extractCrmBcInfo( widget:models.Widget, companyId:ObjId, email:String )( implicit app:play.api.Application ):Future[Option[BcCrmCustomerInfo]] = {
 
+    models.Companies.collection.find( Json.obj( "_id" -> companyId ) ).one[models.Company].flatMap {
+      case Some( company ) =>
+        val x: Option[Future[Option[BcCrmCustomerInfo]]] = for {
+          token <- company.businessCatalystAppToken
+          appKey <- company.businessCatalystAppKey
+          siteId <- widget.bcSiteId orElse company.businessCatalystSiteId.flatMap( x => Try(x.toInt).toOption )
+
+        } yield {
+            val c = new CrmCustomers( token, appKey, siteId )
+
+            for {
+              customers <- c.list(Json.obj("email1.value" -> email ), siteId = Some( siteId ) )
+              addresses <- customers.headOption.fold[Future[Seq[CustomerAddress]]]( Future.successful(Seq()) ){ cust => c.addresses( cust.id ) }
+            } yield customers.headOption.map( customer => BcCrmCustomerInfo( customer, addresses ) )
+
+          }
+
+        x getOrElse Future.successful(None)
+
+      case None =>
+        Future.successful(None)
+    }
+
+  }
 
 
   import play.api.libs.concurrent.Execution.Implicits._

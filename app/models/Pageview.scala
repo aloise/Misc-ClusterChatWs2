@@ -10,7 +10,7 @@ import reactivemongo.api.QueryOpts
 import reactivemongo.api.indexes.{IndexType, Index}
 import reactivemongo.bson.{BSONBoolean, BSONString, BSONDocument}
 import reactivemongo.core.commands.Count
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import models.base.Collection
 import models.base.Collection.ObjId
 import play.api.libs.json.Json
@@ -18,8 +18,8 @@ import models.UserHelper._
 import com.netaporter.uri.dsl._
 import com.netaporter.uri._
 import scala.concurrent.Future
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 
 import scala.util.Try
@@ -68,11 +68,7 @@ case class ChatRoomUserStats(
   pastChatsCount:Int = 0
 )
 
-case class GeoIpLocation(
-                          countryCode: Option[String],
-                          countryName: Option[String],
-                          city:Option[String]
-                        )
+
 
 object Pageviews extends Collection("page_views", Json.format[Pageview]) {
 
@@ -84,6 +80,7 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
 
   collection.indexesManager.ensure( Index( Seq( "stats.trackingCookie" -> IndexType.Hashed ) ) )
   collection.indexesManager.ensure( Index( Seq( "created" -> IndexType.Descending ) ) )
+
 
   def getChatRoomUserStats( trackingCookie:String, count:Int = 5 ):Future[ChatRoomUserStats] = {
 
@@ -113,7 +110,7 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
     }
   }
 
-  def getVisitorStats( request: RequestHeader, overrideTrackingCookie: Option[String] = None, overridePage: Option[String] = None, geoInfoProvider: String => Option[GeoIpLocation] = (s) => None ):VisitorStats = {
+  def getVisitorStats( request: RequestHeader, overrideTrackingCookie: Option[String] = None, overridePage: Option[String] = None ):VisitorStats = {
 
     val (userAgent, operatingSystem ) =
       request.headers.get("User-Agent").map { userAgentStr =>
@@ -129,7 +126,7 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
     // Referer is usually not accessible within the websocket
     val page = overridePage orElse request.headers.get( "Referer" ) orElse request.headers.get("Origin") getOrElse ""
 
-    // TODO - parse languages
+    // todo - parse languages
     val language = request.headers.get( "Accept-Language" ).getOrElse("").take(2).toLowerCase()
     val trackingCookie = ( request.cookies.get( UserHelper.trackingCookieName ).map(_.value) orElse overrideTrackingCookie ) getOrElse ""
     val domain = Try {
@@ -137,9 +134,14 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
       uri.host.getOrElse("")
     }.getOrElse("")
 
-    val location = geoInfoProvider( request.remoteAddress )
+    val location = global.Application.geoIPManager.flatMap{
+      _.getLocation( request.remoteAddress )
+    }
 
-    VisitorStats( request.remoteAddress, page, domain, Seq( language ), trackingCookie, userAgent, operatingSystem, location.flatMap( _.countryCode ), location.flatMap( _.city ) )
+    val countryCode = location.flatMap( _.countryCode.flatMap( s => Option(s) ) )
+    val locationCity = location.flatMap( _.city.flatMap( s => Option(s) ) )
+
+    VisitorStats( request.remoteAddress, page, domain, Seq( language ), trackingCookie, userAgent, operatingSystem, countryCode, locationCity )
 
   }
 

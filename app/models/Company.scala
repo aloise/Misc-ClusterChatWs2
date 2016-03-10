@@ -4,6 +4,8 @@ import java.util.Date
 
 import actors.Company.BusinessCatalystTokenRefreshTick
 import actors.CompanyMaster.CompanyMessage
+import com.ibslabs.bc.OAuth._
+import com.ibslabs.bc.models.crm.SiteItem
 import models.UserInfos._
 import models.base.Collection
 import models.base.Collection.ObjId
@@ -12,15 +14,15 @@ import models.permissions.CompanyPermission._
 import models.permissions.CompanyPermission.CompanyPermissionItem
 import play.api.libs.json.{JsNull, JsUndefined, JsValue, Json}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.modules.reactivemongo.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats._
 import CompanyBrandsSettingz.{ jsonFormat => CompanyBrandsSettingsJsonFormat }
 import reactivemongo.bson.{BSONString, BSONBoolean, BSONDocument}
 import scala.concurrent.{ExecutionContext, Future}
-import play.modules.reactivemongo.json._
-import play.modules.reactivemongo.json.BSONFormats.BSONObjectIDFormat
+import com.ibslabs.bc.SitesHelper._
+import reactivemongo.play.json._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 import scala.reflect.ClassTag
-import BusinessCatalystOAuth._
 
 /**
  * User: aloise
@@ -63,6 +65,38 @@ case class Company(
     } getOrElse Future.successful(Seq())
   }
 
+
+/*
+  def checkPermission[T : Manifest]( newPermissionValue:T, permissionName:String ):Future[Seq[ValidationError]] = {
+    permissions.flatMap{
+      _.find( _.name == permissionName ).flatMap{ p =>
+        Companies.permissionsSet.get( permissionName ).map{
+            case permission: CompanyPermission[T] =>
+              permission.validate(_id, newPermissionValue)
+            case _ =>
+              Future.successful(Seq())
+
+        }
+      }
+    } getOrElse Future.successful(Seq())
+  }
+*/
+
+/*
+  def checkNewCount[T : Manifest]( newCount:T, permissionName:String ):Future[Seq[ValidationError]] = {
+
+    permissions.flatMap{
+      _.find( _.name == permissionName ).flatMap{ p =>
+        Companies.permissionsSet.get( permissionName ).map{
+          case x:CompanyPermission[T] =>
+            x.validate(_id, x.parse( p.value ), Some(newCount))
+          case _ =>
+            Future.successful(Seq())
+        }
+      }
+    } getOrElse Future.successful(Seq())
+  }*/
+
 }
 
 
@@ -92,6 +126,51 @@ object Companies extends Collection("companies", Json.format[Company]) {
   import models.Widgets.{ jsonFormat => j0 }
 
   val MaxPageVisitsToKeepDefault = 10000
+
+  object Permissions {
+
+    val isAnalyticsAvailable = new IsAnalyticsAvailable
+    val isArchiveAvailable = new IsArchiveAvailable
+    val isBcCrmIntegrationAvailable = new IsBcCrmIntegrationAvailable
+    val isWidgetTriggerAvailable = new IsWidgetTriggerAvailable
+    val maxUserAgentsCount = new MaxUserAgentsCount
+    val maxWidgetsCount = new MaxWidgetsCount
+
+    val all = Seq(
+      isAnalyticsAvailable,
+      isArchiveAvailable,
+      isBcCrmIntegrationAvailable,
+      isWidgetTriggerAvailable,
+      maxUserAgentsCount,
+      maxWidgetsCount
+    )
+
+  }
+
+/*
+  val permissionsSet:Map[String,CompanyPermission[_]] = permissionSetBoolean ++ Seq(
+      ).map { x:CompanyPermission[_] =>
+    x.name -> x
+  }.toMap
+*/
+
+
+
+  def refreshOAuthTokens() = {
+
+    val q = Json.obj( "businessCatalystOAuthResponse.refresh_token" -> Json.obj( "$ne" -> JsNull ) )
+
+    models.Companies.collection.find(q).cursor[models.Company]().collect[Seq]().foreach { companies =>
+
+      companies.foreach { company =>
+        global.Application.companyMaster ! CompanyMessage( company._id, BusinessCatalystTokenRefreshTick )
+      }
+
+    }
+
+  }
+
+
 
   def findByBusinessCatalystSiteId( siteId: String, businessCatalystAppKey:String ):Future[Option[Company]] = {
     collection.find( Json.obj(
@@ -135,6 +214,62 @@ object Companies extends Collection("companies", Json.format[Company]) {
   )
 
 
+  def validatePermissions( companyId:ObjId, newPermissions: Seq[CompanyPermissionItem] ):Future[Map[String,Seq[ValidationError]]] = {
+
+    val validationFutures =
+      newPermissions.map{ p =>
+        models.Companies.Permissions.all.
+          find( _.name == p.name ).
+          map( x => x.validate( companyId, p.value ) ).
+          getOrElse(Future.successful(Seq(new CompanyPermission.ValidationError("invalid_permission") ))).
+          map{ p.name -> _ }
+      }
+
+    Future.sequence( validationFutures ).map( _.toMap )
+  }
+
+  def checkPermission[T]( newValue:T, permission:CompanyPermission[T] )(implicit assistant:models.Assistant):Future[Seq[ValidationError]] = {
+    assistant.permissions.map{ p =>
+        permission.validate( assistant.companyId, newValue )
+    } getOrElse Future.successful( Seq() )
+  }
+
+  def checkNewCount[T]( newCount:T, permission: CompanyPermission[T] )(implicit assistant:models.Assistant):Future[Seq[ValidationError]] = {
+
+    assistant.permissions.flatMap{
+      _.find( _.name == permission.name ).map { p =>
+        permission.validate(assistant.companyId, permission.parse(p.value), Some(newCount))
+      }
+    } getOrElse Future.successful(Seq())
+  }
+
+/*
+  def checkPermission[T]( newValue:T, permissionName:String )(implicit assistant:models.Assistant):Future[Seq[ValidationError]] = {
+    assistant.permissions.flatMap{
+      _.find( _.name == permissionName ).flatMap{ p =>
+        Companies.permissionsSet.get( permissionName ).map{
+          case x:CompanyPermission[T] =>
+            x.validate( assistant.companyId, newValue)
+          case _ =>
+            Future.successful(Seq())
+        }
+      }
+    } getOrElse Future.successful(Seq())
+  }
+
+  def checkNewCount[T]( newCount:T, permissionName:String )(implicit assistant:models.Assistant):Future[Seq[ValidationError]] = {
+
+    assistant.permissions.flatMap{
+      _.find( _.name == permissionName ).flatMap{ p =>
+        Companies.permissionsSet.get( permissionName ).map{
+          case x:CompanyPermission[T] =>
+            x.validate( assistant.companyId, x.parse( p.value ), Some(newCount))
+          case _ =>
+            Future.successful(Seq())
+        }
+      }
+    } getOrElse Future.successful(Seq())
+  }*/
 
   def delete(companyId:ObjId)(implicit app:play.api.Application) = {
 
