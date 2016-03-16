@@ -3,3 +3,5 @@ Akka Cluster Chat Application
 
 Uses Play Framework, Scala, Akka, MongoDB, Coffeescript
 HTML5 Websockets
+
+Author: Igor Mordashev <aloise@aloise.name>

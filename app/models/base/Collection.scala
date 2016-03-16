@@ -6,19 +6,18 @@ package models.base
 import play.api.Play.current
 import play.api.libs.json._
 import reactivemongo.api._
-import reactivemongo.api.collections._
+import reactivemongo.play.json.collection
 
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 import play.modules.reactivemongo.ReactiveMongoApi
-
+import reactivemongo.play.json.collection.{ JSONCollection, JSONQueryBuilder }
 import reactivemongo.api.{ DB, MongoConnection, MongoDriver }
 import reactivemongo.bson.BSONObjectID
 
 import scala.reflect.ClassTag
 
 // Reactive Mongo plugin, including the JSON-specialized collection
-import play.modules.reactivemongo.json.collection.{ JSONCollection, JSONQueryBuilder }
 import reactivemongo.api.collections.bson.BSONCollection
 
 abstract class Collection[T:ClassTag]( val name:String, fmt:Format[T] ) {

@@ -5,7 +5,6 @@ import java.io.{ByteArrayOutputStream, FileInputStream, File}
 
 import com.sksamuel.scrimage.Image
 import com.sksamuel.scrimage.nio.PngWriter
-import controllers.helpers.S3File
 import models.ChatRooms._
 import models.base.Collection
 import models.base.Collection._
@@ -17,12 +16,12 @@ import reactivemongo.api.indexes.{IndexType, Index}
 import reactivemongo.bson._
 import play.api.libs.json.{JsString, Json}
 import reactivemongo.play.json.BSONFormats._
+import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import java.util.Date
 import scala.util._
 import reactivemongo.play.json._
-import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import play.modules.reactivemongo.json.collection._
 
 /**
@@ -127,40 +126,6 @@ object Assistants extends Collection("assistants", Json.format[Assistant]) {
 
     collection.find( conditions ).one[models.Assistant].map {
       _.isEmpty
-    }
-  }
-
-  def uploadAvatar( tempFile: File ):Future[String] = {
-    Try( new FileInputStream( tempFile ) ) match {
-      case Success( stream ) =>
-
-
-        val f = Future {
-          val image = Image.fromStream( stream ).fit( AvatarImage.width, AvatarImage.height, AvatarImage.color )
-
-          val byteStream = new ByteArrayOutputStream()
-
-          PngWriter().write( image, byteStream )
-
-          byteStream
-
-        }
-
-        f.flatMap { stream =>
-          val filename = java.util.UUID.randomUUID.toString  + "." + AvatarImage.extension
-
-          val path = Assistants.name + "/avatars/" + filename
-
-          S3File.uploadFile( path , AvatarImage.contentType, stream.toByteArray ).map { _ =>
-            path
-          }
-
-        }
-
-
-
-      case Failure(ex) =>
-        Future.failed(ex)
     }
   }
 

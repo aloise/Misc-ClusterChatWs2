@@ -25,50 +25,54 @@ import play.modules.reactivemongo.json.collection._
 import scala.util.Try
 
 /**
- * Created by pc3 on 28.11.14.
- */
+  * Created by pc3 on 28.11.14.
+  */
 case class Pageview(
-  _id:ObjId,
-  stats: VisitorStats,
-  companyId:Option[ObjId] = None,
-  widgetId:Option[ObjId] = None,
-  created:Date = new Date()
-)
+                     _id:ObjId,
+                     stats: VisitorStats,
+                     companyId:Option[ObjId] = None,
+                     widgetId:Option[ObjId] = None,
+                     created:Date = new Date()
+                   )
 
 case class PageviewByDomain(
-  _id:ObjId,
-  companyId: ObjId,
-  domain:String,
-  count: Int
-)
+                             _id:ObjId,
+                             companyId: ObjId,
+                             domain:String,
+                             count: Int
+                           )
 
 case class PageviewByDay(
-  _id:ObjId,
-  companyId: ObjId,
-  domain:String,
-  month: Int, // counting from 0..11
-  year: Int,
-  day:Int,
-  count: Int
-)
+                          _id:ObjId,
+                          companyId: ObjId,
+                          domain:String,
+                          month: Int, // counting from 0..11
+                          year: Int,
+                          day:Int,
+                          count: Int
+                        )
 
 case class PageviewUniqueByDay(
-    _id:ObjId,
-    companyId: ObjId,
-    domain:String,
-    cookie:String,
-    month: Int, // counting from 0..11
-    year: Int,
-    day:Int,
-    count: Int
-)
+                                _id:ObjId,
+                                companyId: ObjId,
+                                domain:String,
+                                cookie:String,
+                                month: Int, // counting from 0..11
+                                year: Int,
+                                day:Int,
+                                count: Int
+                              )
 
 case class ChatRoomUserStats(
-  pageVisits:Seq[Pageview] = Nil,
-  pastChatsCount:Int = 0
-)
+                              pageVisits:Seq[Pageview] = Nil,
+                              pastChatsCount:Int = 0
+                            )
 
-
+case class GeoIpLocation(
+                          countryCode: Option[String],
+                          countryName: Option[String],
+                          city:Option[String]
+                        )
 
 object Pageviews extends Collection("page_views", Json.format[Pageview]) {
 
@@ -80,7 +84,6 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
 
   collection.indexesManager.ensure( Index( Seq( "stats.trackingCookie" -> IndexType.Hashed ) ) )
   collection.indexesManager.ensure( Index( Seq( "created" -> IndexType.Descending ) ) )
-
 
   def getChatRoomUserStats( trackingCookie:String, count:Int = 5 ):Future[ChatRoomUserStats] = {
 
@@ -110,7 +113,7 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
     }
   }
 
-  def getVisitorStats( request: RequestHeader, overrideTrackingCookie: Option[String] = None, overridePage: Option[String] = None ):VisitorStats = {
+  def getVisitorStats( request: RequestHeader, overrideTrackingCookie: Option[String] = None, overridePage: Option[String] = None, geoInfoProvider: String => Option[GeoIpLocation] = (s) => None ):VisitorStats = {
 
     val (userAgent, operatingSystem ) =
       request.headers.get("User-Agent").map { userAgentStr =>
@@ -126,7 +129,7 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
     // Referer is usually not accessible within the websocket
     val page = overridePage orElse request.headers.get( "Referer" ) orElse request.headers.get("Origin") getOrElse ""
 
-    // todo - parse languages
+    // TODO - parse languages
     val language = request.headers.get( "Accept-Language" ).getOrElse("").take(2).toLowerCase()
     val trackingCookie = ( request.cookies.get( UserHelper.trackingCookieName ).map(_.value) orElse overrideTrackingCookie ) getOrElse ""
     val domain = Try {
@@ -134,14 +137,9 @@ object Pageviews extends Collection("page_views", Json.format[Pageview]) {
       uri.host.getOrElse("")
     }.getOrElse("")
 
-    val location = global.Application.geoIPManager.flatMap{
-      _.getLocation( request.remoteAddress )
-    }
+    val location = geoInfoProvider( request.remoteAddress )
 
-    val countryCode = location.flatMap( _.countryCode.flatMap( s => Option(s) ) )
-    val locationCity = location.flatMap( _.city.flatMap( s => Option(s) ) )
-
-    VisitorStats( request.remoteAddress, page, domain, Seq( language ), trackingCookie, userAgent, operatingSystem, countryCode, locationCity )
+    VisitorStats( request.remoteAddress, page, domain, Seq( language ), trackingCookie, userAgent, operatingSystem, location.flatMap( _.countryCode ), location.flatMap( _.city ) )
 
   }
 

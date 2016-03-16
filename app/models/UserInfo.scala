@@ -2,14 +2,9 @@ package models
 
 
 import java.util.Date
-import com.ibslabs.bc.CrmCustomers
-import com.ibslabs.bc.models.crm
-import com.ibslabs.bc.models.crm.CustomerAddress
-import com.ibslabs.bc.models.crm.CustomerHelper._
 import models.Pageviews._
 import models.base.Collection
 import models.base.Collection.ObjId
-import org.scalatest.fixture
 import play.api.libs.json.Json
 import play.api.mvc.Cookie
 import reactivemongo.api.indexes.{IndexType, Index}
