@@ -42,6 +42,7 @@ case class Company(
   packageName:Option[String] = None,
   branding: Option[CompanyBrandingSettings] = None,
   maxPageVisitsToKeep:Option[Int] = None, // Some(-1) to disable
+  blockReason:Option[String] = None,
   created:Date = new Date()
 ) {
 
@@ -91,6 +92,10 @@ object Companies extends Collection("companies", Json.format[Company]) {
   import models.Widgets.{ jsonFormat => j0 }
 
   val MaxPageVisitsToKeepDefault = 10000
+
+  object BlockReasons {
+    val PaymentFailed = "payment_failed"
+  }
 
   def refreshOAuthTokens() = {
 
