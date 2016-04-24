@@ -14,7 +14,7 @@ import play.api.mvc.{Result, RequestHeader}
 import reactivemongo.api.collections.bson.BSONCollection
 import reactivemongo.api.indexes.{IndexType, Index}
 import reactivemongo.bson._
-import play.api.libs.json.{JsString, Json}
+import play.api.libs.json.{JsObject, JsString, Json}
 import reactivemongo.play.json.BSONFormats._
 import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
 import scala.concurrent.Future
@@ -82,6 +82,8 @@ object Assistants extends Collection("assistants", Json.format[Assistant]) {
 
   val millisecondsInDay:Long = 3600*24*1000
 
+  class AuthorizeException( reason:String ) extends Exception( reason )
+
   def authorize( usernameOrEmail:String, password:String, companyId:Option[BSONObjectID] = None ):Future[Option[models.Assistant]] = {
 
     val opts = Json.obj(
@@ -91,11 +93,24 @@ object Assistants extends Collection("assistants", Json.format[Assistant]) {
       ),
       "password" -> Crypto.sign( password ),
       "isDeleted" -> false
-    )
+    ) ++ companyId.fold( Json.obj() )( cid => Json.obj( "companyId" -> companyId ) )
 
-    models.Assistants.collection.find(
-      opts ++ companyId.fold( Json.obj() )( cid => Json.obj( "companyId" -> companyId ) )
-    ).one[models.Assistant]
+    models.Assistants.collection.find( opts ).one[models.Assistant].flatMap {
+      case a @ Some( assistant ) =>
+        models.Companies.collection.find( Json.obj("_id" -> assistant.companyId ), Json.obj( "blockReason" -> 1 ) ).one[JsObject].map {
+          case Some( companyObj ) =>
+
+            ( companyObj \ "blockReason" ).asOpt[String].fold( a ){ blockReason =>
+              throw new AuthorizeException( blockReason )
+            }
+
+          case None =>
+            // TODO - company not found
+            None
+        }
+      case None =>
+        Future.successful(None)
+    }
   }
 
   def create( a:Assistant ) = {
