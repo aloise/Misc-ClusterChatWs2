@@ -82,7 +82,8 @@ object Assistants extends Collection("assistants", Json.format[Assistant]) {
 
   val millisecondsInDay:Long = 3600*24*1000
 
-  class AuthorizeException( reason:String ) extends Exception( reason )
+  abstract class AuthorizeException( reason:String ) extends Exception( reason )
+  class CompanyAccessBlockedException( reason:String ) extends AuthorizeException( reason )
 
   def authorize( usernameOrEmail:String, password:String, companyId:Option[BSONObjectID] = None ):Future[Option[models.Assistant]] = {
 
@@ -101,7 +102,7 @@ object Assistants extends Collection("assistants", Json.format[Assistant]) {
           case Some( companyObj ) =>
 
             ( companyObj \ "blockReason" ).asOpt[String].fold( a ){ blockReason =>
-              throw new AuthorizeException( blockReason )
+              throw new CompanyAccessBlockedException( blockReason )
             }
 
           case None =>
