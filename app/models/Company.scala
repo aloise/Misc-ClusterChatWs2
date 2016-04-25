@@ -95,6 +95,7 @@ object Companies extends Collection("companies", Json.format[Company]) {
 
   object BlockReasons {
     val PaymentFailed = "payment_failed"
+    val PaymentProfileNotConfigured = "payment_profile_not_configured"
   }
 
   def refreshOAuthTokens() = {
