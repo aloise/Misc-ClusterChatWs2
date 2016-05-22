@@ -29,7 +29,7 @@ libraryDependencies ++= Seq(
   "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.0",
   "com.github.tototoshi" %% "scala-csv" % "1.2.2",
   "com.typesafe.play" %% "play-mailer" % "4.0.0-M1",
-  "org.cvogt" %% "play-json-extensions" % "0.5.0",
+  "org.cvogt" %% "play-json-extensions" % "0.6.1",
   "org.apache.commons" % "commons-lang3" % "3.4"
 
 )
