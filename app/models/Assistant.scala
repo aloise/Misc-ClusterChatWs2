@@ -1,7 +1,7 @@
 package models
 
 import java.awt.Color
-import java.io.{ByteArrayOutputStream, FileInputStream, File}
+import java.io.{ByteArrayOutputStream, File, FileInputStream}
 
 import com.sksamuel.scrimage.Image
 import com.sksamuel.scrimage.nio.PngWriter
@@ -10,19 +10,23 @@ import models.base.Collection
 import models.base.Collection._
 import models.permissions.CompanyPermission.CompanyPermissionItem
 import play.api.libs.Crypto
-import play.api.mvc.{Result, RequestHeader}
+import play.api.mvc.{RequestHeader, Result}
 import reactivemongo.api.collections.bson.BSONCollection
-import reactivemongo.api.indexes.{IndexType, Index}
+import reactivemongo.api.indexes.{Index, IndexType}
 import reactivemongo.bson._
 import play.api.libs.json.{JsObject, JsString, Json}
 import reactivemongo.play.json.BSONFormats._
 import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat
+
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits._
 import java.util.Date
+
 import scala.util._
 import reactivemongo.play.json._
 import play.modules.reactivemongo.json.collection._
+
+import scala.util.parsing.json.JSONObject
 
 /**
  * User: aloise
@@ -45,6 +49,7 @@ case class Assistant(
   permissions:Option[Seq[CompanyPermissionItem]] = None,
   passwordResetToken:Option[String] = None,
   created : Date = new Date()
+
 )
 
 case class AssistantInfo(
@@ -230,21 +235,24 @@ object Assistants extends Collection("assistants", Json.format[Assistant]) {
     )
   }
 
-  def afterSuccessfulLogin(assistant:models.Assistant) = {
+  def afterSuccessfulLogin(assistant:models.Assistant, loginHeaders:Map[String,String] = Map() ) = {
 
     models.Assistants.collection.update(
       Json.obj( "_id" -> assistant._id ),
-      Json.obj( "$set" ->
-        Json.obj(
-          "lastLogin" -> new Date(),
-          "status" -> JsString( assistant.statusBeforeDisconnect.getOrElse( models.Assistants.Status.Away ) )
+      Json.obj( "$set" -> (
+          Json.obj(
+            "lastLogin" -> new Date(),
+            "status" -> JsString( assistant.statusBeforeDisconnect.getOrElse( models.Assistants.Status.Away ) )
+          ) ++ (
+            if( loginHeaders.isEmpty ) Json.obj() else Json.obj( "loginHeaders" -> loginHeaders )
+          )
         )
       )
     ) flatMap { error =>
       if( error.ok ){
         models.Assistants.collection.find(Json.obj("_id" -> assistant._id )).one[models.Assistant] map {
-          case Some( assistant ) =>
-            assistant
+          case Some( assistantInfo ) =>
+            assistantInfo
           case _ =>
             throw new Exception("assistant_not_found")
         }
