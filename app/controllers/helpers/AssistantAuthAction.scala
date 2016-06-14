@@ -26,10 +26,6 @@ object AssistantAuthAction {
   val assistantAuthCookieName = "assistantId"
   val assistantAuthCookiePath = "/"
 
-  val discardingCookie = DiscardingCookie( assistantAuthCookieName, assistantAuthCookiePath )
-
-
-
   case class CompanyPermissions(
     _id:ObjId,
     permissions:Option[Seq[CompanyPermissionItem]]
