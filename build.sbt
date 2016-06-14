@@ -1,8 +1,8 @@
 name := "chat-cluster-ws"
 
-version := "1.0.0"
+version := "1.0.1"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
 // lazy val root = (project in file(".")).enablePlugins(PlayScala).settings( autoScalaLibrary := false )
 
@@ -15,22 +15,14 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   cache,
-  ws,
-  filters,
   "commons-io" % "commons-io" % "2.4",
   "org.reactivemongo" %% "play2-reactivemongo" % "0.11.10",
   "com.github.fdimuccio" %% "play2-sockjs" % "0.4.0",
-  "com.softwaremill.macwire" %% "macros" % "0.7.2",
   "org.julienrf" %% "play-json-variants" % "2.0",
   "net.sf.uadetector" % "uadetector-resources" % "2014.10",
   "com.netaporter" %% "scala-uri" % "0.4.3",
-  "joda-time" % "joda-time" % "2.9.2",
-  "commons-io" % "commons-io" % "2.4",
   "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.0",
-  "com.github.tototoshi" %% "scala-csv" % "1.2.2",
-  "com.typesafe.play" %% "play-mailer" % "4.0.0-M1",
   "org.cvogt" %% "play-json-extensions" % "0.6.1",
   "org.apache.commons" % "commons-lang3" % "3.4"
-
 )
 
