@@ -9,9 +9,7 @@ object HeaderHelpers {
     "Access-Control-Allow-Origin" -> play.api.Play.current.configuration.getString("assistants.domain").getOrElse("*"),
     "Access-Control-Allow-Methods" -> "POST, GET, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Credentials" -> "true",
-    "Access-Control-Allow-Headers" -> "Origin, X-Requested-With, Content-Type, Accept, Referrer, User-Agent, Cookie, X-Json, X-Prototype-Version",
-    "Access-Control-Allow-Credentials" -> "true"
-
+    "Access-Control-Allow-Headers" -> "Origin, X-Requested-With, Content-Type, Accept, Referrer, User-Agent, Cookie, X-Json, X-Prototype-Version"
   )
 
 }
