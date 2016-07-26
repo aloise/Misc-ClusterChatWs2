@@ -118,6 +118,8 @@ class AssistantConnection( request:RequestHeader, assistantSocksActor:ActorRef )
           AssistantGetUserPastChatsResult( trackingCookie, page, itemsPerPage, Seq() )
       } pipeTo sender
 
+    case AssistantInfoUpdated( newAssistantData ) =>
+      context.become( receiveNormal( newAssistantData, company, companyActor ) )
 
     // other request
     case a:AssistantChatRoomRequest =>
